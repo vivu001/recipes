@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Recipe} from './recipe.model';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -32,12 +32,12 @@ export class RecipesService {
     constructor() {
     }
 
-    get getAllRecipes(): Recipe[] {
-        return [...this._recipes];
+    getAllRecipes$(): Observable<Recipe[]> {
+        return this.recipesSubject.asObservable();
     }
 
-    getRecipe(recipeID: string) {
-        return {...this._recipes.find(recipe => recipe.id === recipeID)};
+    getRecipe(recipeId: string) {
+        return {...this._recipes.find(recipe => recipe.id === recipeId)};
     }
 
     deleteRecipe(recipeId: string) {
@@ -45,9 +45,5 @@ export class RecipesService {
         console.table(this._recipes);
 
         this.recipesSubject.next(this._recipes);
-    }
-
-    getAllRecipes$(): Observable<Recipe[]> {
-        return this.recipesSubject.asObservable();
     }
 }
