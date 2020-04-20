@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {RecipesService} from "../recipes.service";
-import {Recipe} from "../recipe.model";
+import {ActivatedRoute, Router} from '@angular/router';
+import {RecipesService} from '../recipes.service';
+import {Recipe} from '../recipe.model';
 
 @Component({
     selector: 'app-recipe-detail',
@@ -22,7 +22,7 @@ export class RecipeDetailPage implements OnInit {
             }
             const recipeId = paraMap.get('recipeId');
             this.loadedRecipe = this.recipesService.getRecipe(recipeId);
-        })
+        });
     }
 
     onDeleteRecipe() {

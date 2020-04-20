@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Recipe} from "./recipe.model";
+import {Recipe} from './recipe.model';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,8 @@ export class RecipesService {
         }
     ];
 
+    recipesSubject = new BehaviorSubject<Recipe[]>(this._recipes);
+
     constructor() {
     }
 
@@ -40,5 +43,11 @@ export class RecipesService {
     deleteRecipe(recipeId: string) {
         this._recipes = this._recipes.filter(recipe => recipe.id !== recipeId);
         console.table(this._recipes);
+
+        this.recipesSubject.next(this._recipes);
+    }
+
+    getAllRecipes$(): Observable<Recipe[]> {
+        return this.recipesSubject.asObservable();
     }
 }
